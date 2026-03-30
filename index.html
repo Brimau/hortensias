@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Mafercita chocolatosa 💙</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  overflow: hidden;
+}
+
+h1 {
+  text-align: center;
+  font-size: clamp(1.2em, 4vw, 1.8em);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeText 3s ease forwards;
+}
+
+.bouquet {
+  position: relative;
+  width: 60vw;
+  max-width: 260px;
+  height: 70vw;
+  max-height: 320px;
+}
+
+.flower {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  transform: scale(0);
+  animation: grow 2s ease forwards;
+}
+
+.petal {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle, #90caf9, #1e88e5);
+  border-radius: 50%;
+}
+
+.center {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: #bbdefb;
+  border-radius: 50%;
+  top: 28px;
+  left: 28px;
+}
+
+.stem {
+  position: absolute;
+  width: 4px;
+  height: 90px;
+  background: #2e7d32;
+  top: 60px;
+  left: 33px;
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: growStem 2s ease forwards;
+}
+
+@keyframes grow {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes growStem {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes fadeText {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<h1>
+Si te sirve de consuelo, te regalo unas flores con tu color fav, el azul 💙<br>
+Mafercita mi sabrina carpintera amante de los elotes
+</h1>
+
+<div class="bouquet" id="bouquet"></div>
+
+<script>
+function createFlower(x, y, delay) {
+  const flower = document.createElement("div");
+  flower.classList.add("flower");
+  flower.style.left = x + "px";
+  flower.style.top = y + "px";
+  flower.style.animationDelay = delay + "s";
+
+  // pétalos (más cantidad para parecer hortensia)
+  for (let i = 0; i < 10; i++) {
+    const petal = document.createElement("div");
+    petal.classList.add("petal");
+
+    const angle = (i * 36) * (Math.PI / 180);
+    const radius = 20;
+
+    petal.style.left = 30 + Math.cos(angle) * radius + "px";
+    petal.style.top = 30 + Math.sin(angle) * radius + "px";
+
+    flower.appendChild(petal);
+  }
+
+  // centro
+  const center = document.createElement("div");
+  center.classList.add("center");
+  flower.appendChild(center);
+
+  // tallo
+  const stem = document.createElement("div");
+  stem.classList.add("stem");
+  stem.style.animationDelay = delay + "s";
+  flower.appendChild(stem);
+
+  return flower;
+}
+
+const bouquet = document.getElementById("bouquet");
+
+const positions = [
+  [80, 0, 0],
+  [20, 60, 0.5],
+  [140, 60, 1],
+  [50, 120, 1.5],
+  [110, 120, 2]
+];
+
+positions.forEach(p => {
+  bouquet.appendChild(createFlower(p[0], p[1], p[2]));
+});
+</script>
+
+</body>
+</html>
